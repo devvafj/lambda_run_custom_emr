@@ -37,6 +37,7 @@ class EMRCluster:
             instances["KeepJobFlowAliveWhenNoSteps"] = bool(instances["KeepJobFlowAliveWhenNoSteps"])
             groups = instances.get('InstanceGroups', [])
             groups = [[int(i['InstanceCount']) for i in grp] for grp in groups]
+            instances['InstanceGroups'] = groups
         except KeyError:
             print(CLUSTER_INVALID_INSTANCES_CONFIG)
         

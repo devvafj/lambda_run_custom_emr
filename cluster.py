@@ -6,7 +6,7 @@ import os
 class EMRCluster:
 
     def __init__(self, config: dict) -> None:
-        region = os.environ['aws_region'] #'us-east-1'
+        region = os.environ['aws_region']
         emr = boto3.client('emr', region_name=region)
         self.load_config(config)
         self.create_cluster(emr)
@@ -25,23 +25,25 @@ class EMRCluster:
             print(CLUSTER_INVALID_ROOT_CONFIG)
 
         # Optional configs
-        self.visible_to_all_users = config.get('VisibleToAllUsers', True)
+        self.visible_to_all_users = bool(config.get('VisibleToAllUsers', True))
         self.steps = config.get('Steps', [])
         self.applications = config.get('Applications', [])
         self.tags = config.get('Tags', [])
 
 
-    def parse_instances(instances: dict) -> dict:
+    def parse_instances(self, instances: dict) -> dict:
         try:
             instances["TerminationProtected"] = bool(instances["TerminationProtected"])
             instances["KeepJobFlowAliveWhenNoSteps"] = bool(instances["KeepJobFlowAliveWhenNoSteps"])
             groups = instances.get('InstanceGroups', [])
-            groups = [[int(i['InstanceCount']) for i in grp] for grp in groups]
+            
+            for instance in groups:
+                instance['InstanceCount'] = int(instance['InstanceCount'])
+
             instances['InstanceGroups'] = groups
+            return instances
         except KeyError:
             print(CLUSTER_INVALID_INSTANCES_CONFIG)
-        
-        return instances
 
 
     def create_cluster(self, emr_client) -> str:

@@ -3,6 +3,7 @@
 Creates AWS EMR Clusters with stored configs using a lambda function.
 
 ## Requirements on Lambda
+
 - A Lambda Function created on AWS
 - A DynamoDB table to store your cluster configs
 - The Lambda Function Role needs access to the following AWS Services: EMR, DynamoDB

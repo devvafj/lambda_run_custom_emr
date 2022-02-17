@@ -1,0 +1,38 @@
+{
+    "Id": "d8a4606020664173b3064946a0d52b2c",
+    "ServiceRole": "EMR_DefaultRole",
+    "VisibleToAllUsers": "True",
+    "JobFlowRole": "EMR_EC2_DefaultRole",
+    "Instances": {
+     "InstanceGroups": [
+      {
+       "InstanceRole": "MASTER",
+       "InstanceCount": 1,
+       "InstanceType": "m1.xlarge",
+       "Market": "ON_DEMAND",
+       "Name": "Master nodes"
+      },
+      {
+       "InstanceRole": "CORE",
+       "InstanceCount": 2,
+       "InstanceType": "m1.xlarge",
+       "Market": "ON_DEMAND",
+       "Name": "Slave nodes"
+      }
+     ],
+     "TerminationProtected": "False",
+     "KeepJobFlowAliveWhenNoSteps": "True",
+     "Ec2KeyName": "Dkan-key-supun",
+     "Ec2SubnetId": "subnet-004f9749682995eb4"
+    },
+    "ReleaseLabel": "emr-5.18.0",
+    "Steps": [],
+    "LogUri": "s3://data-platform-logs-emr/logs",
+    "Applications": [
+     {
+      "Name": "Spark"
+     }
+    ],
+    "Name": "default_cluster",
+    "Tags": []
+   }
